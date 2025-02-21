@@ -1,4 +1,4 @@
-package nested.innerclasses;
+package nested.innerclasses.memberinner;
 
 class IT{
 	private String compnayName;
