@@ -49,3 +49,12 @@ insert into EmployeeProjects (Emp_ID, Project_ID) values
 
 select * from EmployeeProjects;
 
+desc employees;
+show databases;
+use infydb;
+
+alter table employee add temp INT;
+alter table employee modify temp INT(10);
+alter table employee change temp emp_temp varchar(20);
+rename table employee to Employees;
+
