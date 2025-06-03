@@ -247,8 +247,64 @@ select * from deliveries where extras_type like 'wides' or extras_type like 'no 
 select * from deliveries where player_dismissed is null or player_dismissed like '';
 -- 
 
+-- ===================================================================================
 
 
+-- Practice Questions for ORDER BY
+-- Basic Ordering
+-- 
+--     List all deliveries ordered by total_runs from highest to lowest.
+
+select * from deliveries order by total_runs desc;
+-- 
+--     Get all deliveries ordered by inning in ascending order, then by over in descending order.
+
+select * from deliveries order by inning asc, `over` desc;
+-- select * from deliveries where `over`=19;
+-- 
+--     Find all deliveries where the batter is 'Virat Kohli', ordered alphabetically by batter name.
+
+select * from deliveries where lower(batter)='virat kohli' order by batter asc;
+-- 
+--     List all deliveries where the extras_type is not null, ordered by extras_type alphabetically.
+
+select * from deliveries where extras_type is not null order by extras_type asc;
+-- 
+
+-- Advanced Ordering
+-- 
+--     Retrieve all deliveries ordered by match_id ascending, then by inning descending, then by over ascending.
+
+select * from deliveries order by match_id asc, inning desc, `over` asc;
+-- 
+--     List the top 10 deliveries with the highest total_runs.
+
+select * from deliveries order by total_runs desc limit 10;
+-- 
+--     List all deliveries ordered by scraped_at date from newest to oldest.
+
+select * from deliveries order by scraped_at desc;
+-- 
+--     Find all deliveries where the player_dismissed is not null, ordered by player_dismissed alphabetically.
+-- 
+select * from deliveries where player_dismissed is not null order by player_dismissed asc;
+
+--     Retrieve all deliveries ordered by batsman_runs in descending order, then by batter alphabetically.
+-- 
+select * from deliveries order by batsman_runs desc, batter asc;
+
+
+-- Check the actual data with
+
+SELECT DISTINCT batter FROM deliveries LIMIT 10;
+
+-- Use TRIM() if there might be extra spaces.
+
+select * from deliveries where trim(batter)='SC Ganguly';
+
+-- Use LIKE for case-insensitive partial match
+
+select * from deliveries where batter like '%bb%';
 
 
 
