@@ -167,19 +167,19 @@ select * from deliveries where `over`=10 and extras_type is not null;
 -- 
 --     List all deliveries where "W Jaffer" was the batter and the dismissal was caught.
 
-select * from deliveries where LOWER(batter)='W Jaffer' and lower(dismissal_kind)='caught';
+select * from deliveries where LOWER(batter)='w jaffer' and LOWER(dismissal_kind)='caught';
 
 --     Find all deliveries where "SC Ganguly" was the bowler and a wicket was taken or the dismissal was run out.
 
-select * from deliveries where lower(bowler)='SC Ganguly' and is_wicket=1 and lower(dismissal_kind)='run out'; 
+select * from deliveries where LOWER(bowler)=LOWER('SC Ganguly') and is_wicket=1 or LOWER(dismissal_kind)='run out'; 
 -- 
 -- 3. Filtering by Match, Innings, and Runs
 -- 
---     Retrieve all deliveries in match_id 12345 and in inning 2 where the batsman scored more than 4 runs.
+--     Retrieve all deliveries in match_id 335982 and in inning 2 where the batsman scored more than 4 runs.
 
-select * from deliveries where match_id=335982 and inning=2 and lower(batsman_runs)>4;
+select * from deliveries where match_id=335982 and inning=2 and batsman_runs > 4;
 
---     Find all deliveries in match_id 54321 where the total runs were greater than 10 and the extras_type was "wides".
+--     Find all deliveries in match_id 335982 where the total runs were greater than 10 and the extras_type was "wides".
 
 select * from deliveries where match_id=335982 and total_runs>10 and LOWER(extras_type)='wides';
 -- 
@@ -191,28 +191,61 @@ select * from deliveries where player_dismissed is not null and LOWER(dismissal_
 
 --     Find all deliveries where extras_type is either "wides" or "no ball".
 
-select * from deliveries where LOWER(extras_type)='wides' or LOWER(extras_type)='no ball';
+select * from deliveries where (extras_type is not null) and (LOWER(extras_type)='wides' or LOWER(extras_type)='no ball');
 
 -- 
 -- 5. Complex Conditions
 -- 
 --     Find all deliveries where "BB McCullum" scored more than 4 runs and the dismissal was not "bowled".
 
-select * from deliveries where LOWER(batsman_runs)>4 and LOWER(batter)='BB McCullum' and LOWER(dismissal_kind) <> 'bowled';
+select * from deliveries where batsman_runs > 4 and LOWER(batter)=LOWER('BB McCullum') and LOWER(dismissal_kind) <> 'bowled';
 
 --     Retrieve all deliveries where the bowler was "P Kumar" and either the batsman scored 4 runs or the batsman was dismissed.
 
 
-select * from deliveries where LOWER(bowler)='P Kumar' and batsman_runs=4 or is_wicket=1;
+select * from deliveries where LOWER(bowler)=LOWER('P Kumar') and (batsman_runs=4 or is_wicket=1);
 
 
+-- ================================================================================
 
 
+select LOWER('HeLLo');
 
+-- 
+-- Pattern Matching Practice Questions
+-- 
+--     Find all deliveries where the batter's name starts with 'Sa'.
 
+select * from deliveries where batter like 'sa%';
+-- 
+--     Find all deliveries where the bowler's name ends with 'K'.
 
+select * from deliveries where bowler like '%k';
 
+--     Find all deliveries where the extras_type contains the substring 'no'.
 
+select * from deliveries where extras_type like '%no%';
+-- 
+--     Find all deliveries where the player_dismissed name contains 'Singh'.
+
+select * from deliveries where player_dismissed like '%Singh%'
+-- 
+--     Find all deliveries where the dismissal_kind starts with 'c' (e.g., 'caught', 'caught and bowled').
+-- 
+select * from deliveries where lower(dismissal_kind) like 'c%';
+
+--     Find all deliveries where the batter's name has exactly 3 characters before 'K' (e.g., 'SK', 'AKK').
+
+select * from deliveries where batter like '___K';
+-- 
+--     Find all deliveries where the extras_type is either 'wides' or 'no ball' using pattern matching.
+
+select * from deliveries where extras_type like 'wides' or extras_type like 'no ball';
+-- 
+--     Find all deliveries where the player_dismissed is null or empty (use pattern matching to find empty strings).
+-- 
+select * from deliveries where player_dismissed is null or player_dismissed like '';
+-- 
 
 
 
