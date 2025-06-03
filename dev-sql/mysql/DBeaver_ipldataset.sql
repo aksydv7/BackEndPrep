@@ -15,6 +15,9 @@ select * from deliveries;
 
 desc deliveries;
 
+
+-- ==========================================================================
+
 -- Practice Questions for WHERE Clause
 
 -- 1. Basic Filtering
@@ -145,6 +148,62 @@ select * from deliveries where extras_type='wides' and `over`=3;
 select * from deliveries where non_striker='RT Ponting'
 
 
+
+-- ===========================================================================
+-- 
+-- 
+-- Practice Questions with Multiple Filters
+-- 1. Basic Multiple Conditions
+-- 
+--     Find all deliveries where the batting team was "Mumbai Indians" and the batsman scored 6 runs.
+
+select * from deliveries where batting_team='Mumbai Indians' and batsman_runs=6;
+
+--     Retrieve all deliveries in over 10 and where extras_type is not null.
+
+select * from deliveries where `over`=10 and extras_type is not null;
+-- 
+-- 2. Filtering by Player and Dismissal
+-- 
+--     List all deliveries where "W Jaffer" was the batter and the dismissal was caught.
+
+select * from deliveries where LOWER(batter)='W Jaffer' and lower(dismissal_kind)='caught';
+
+--     Find all deliveries where "SC Ganguly" was the bowler and a wicket was taken or the dismissal was run out.
+
+select * from deliveries where lower(bowler)='SC Ganguly' and is_wicket=1 and lower(dismissal_kind)='run out'; 
+-- 
+-- 3. Filtering by Match, Innings, and Runs
+-- 
+--     Retrieve all deliveries in match_id 12345 and in inning 2 where the batsman scored more than 4 runs.
+
+select * from deliveries where match_id=335982 and inning=2 and lower(batsman_runs)>4;
+
+--     Find all deliveries in match_id 54321 where the total runs were greater than 10 and the extras_type was "wides".
+
+select * from deliveries where match_id=335982 and total_runs>10 and LOWER(extras_type)='wides';
+-- 
+-- 4. Filtering with Nulls and Specific Values
+-- 
+--     List all deliveries where player_dismissed is not null and the dismissal_kind is "caught".
+
+select * from deliveries where player_dismissed is not null and LOWER(dismissal_kind)='caught';
+
+--     Find all deliveries where extras_type is either "wides" or "no ball".
+
+select * from deliveries where LOWER(extras_type)='wides' or LOWER(extras_type)='no ball';
+
+-- 
+-- 5. Complex Conditions
+-- 
+--     Find all deliveries where "BB McCullum" scored more than 4 runs and the dismissal was not "bowled".
+
+select * from deliveries where LOWER(batsman_runs)>4 and LOWER(batter)='BB McCullum' and LOWER(dismissal_kind) <> 'bowled';
+
+--     Retrieve all deliveries where the bowler was "P Kumar" and either the batsman scored 4 runs or the batsman was dismissed.
+
+
+select * from deliveries where LOWER(bowler)='P Kumar' and batsman_runs=4 or is_wicket=1;
 
 
 
