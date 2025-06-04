@@ -360,17 +360,82 @@ group by match_id;
 -- Grouping with Conditions
 -- 
 --     For each batsman, find the total runs scored where they scored more than 4 runs in a delivery.
+select count(batter) as howmaneytimes_scoredmorethen4,batter, sum(total_runs)
+from deliveries
+where total_runs>4
+group by batter;
 
+select * from deliveries where lower(batter)='rt ponting';
 -- 
 --     Count the number of dismissals (player_dismissed not null) for each dismissal_kind.
+select count(distinct player_dismissed), dismissal_kind
+from deliveries
+where (player_dismissed is not null and player_dismissed !='') and (player_dismissed!='NA') 
+group by dismissal_kind;
+
+-- < for unique players dismissal>
+
+select count(player_dismissed), dismissal_kind
+from deliveries
+where (player_dismissed is not null and player_dismissed !='') and (player_dismissed!='NA') 
+group by dismissal_kind;
+
+-- < for unique dismissal kinnd>
+
+select count(distinct batter) from deliveries
 -- 
 --     Find the number of deliveries in each inning where extras_type was 'wides'.
+select count(ball) as deliveries, inning 
+from deliveries
+where extras_type='wides'
+group by inning;
+
+select sum(ball)
+from deliveries
+where inning > 5;
+
+select *
+from deliveries
+where inning > 5;
+
 -- 
 -- Advanced Grouping
 -- 
 --     List each match_id and the total number of wickets (is_wicket=1) in that match.
+select match_id as matchx, count(*)
+from deliveries
+where is_wicket=1
+group by match_id;
+
 -- 
 --     For each batsman, find the maximum number of runs scored in a single delivery.
+select batter as batsmanName, max(batsman_runs)
+from deliveries
+group by batter;
+
+
+
+-- =======================================================================
+
+update deliveries set extras_type='NA' where (inning=1) and (extras_type is null and extras_type !='');
+
+select * from deliveries where (inning=1) and (extras_type is not null and extras_type !='');
+
+rollback;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
