@@ -307,4 +307,74 @@ select * from deliveries where trim(batter)='SC Ganguly';
 select * from deliveries where batter like '%bb%';
 
 
+-- ==============================================================
+
+
+-- sql functions
+
+select count(*) from deliveries where batter is not null;
+select count(*) from deliveries;
+
+select min(total_runs) from deliveries;
+select max(total_runs) from deliveries;
+select avg(total_runs) from deliveries;
+
+select avg(total_runs) as avrageOfTotalruns from deliveries;
+
+
+-- ====================================================
+
+-- Practice Questions for GROUP BY
+-- Basic Grouping
+-- 
+--     Count the number of deliveries for each batsman.
+select batter,count(*) from deliveries group by batter;
+-- 
+--     Find the total batsman_runs scored by each batsman.
+select batter,sum(batsman_runs) as totalRuns from deliveries group by batter;
+-- 
+--     Count how many times each extras_type occurs in the dataset.
+select extras_type from deliveries;
+select distinct extras_type from deliveries;
+
+select extras_type,count(*) as totalCount
+from deliveries
+where extras_type is not null and extras_type !=''
+group by extras_type;
+
+-- 
+--     List each bowler and the number of deliveries they bowled.
+select distinct bowler from deliveries;
+
+select bowler,count(ball)
+from deliveries
+where (bowler is not null and bowler !='') and (ball is not null and ball !='')
+group by bowler;
+
+
+--     Find the total total_runs scored in each match_id.
+select match_id,sum(total_runs)
+from deliveries
+group by match_id;
+-- 
+-- Grouping with Conditions
+-- 
+--     For each batsman, find the total runs scored where they scored more than 4 runs in a delivery.
+
+-- 
+--     Count the number of dismissals (player_dismissed not null) for each dismissal_kind.
+-- 
+--     Find the number of deliveries in each inning where extras_type was 'wides'.
+-- 
+-- Advanced Grouping
+-- 
+--     List each match_id and the total number of wickets (is_wicket=1) in that match.
+-- 
+--     For each batsman, find the maximum number of runs scored in a single delivery.
+
+
+
+
+
+
 
