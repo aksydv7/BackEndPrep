@@ -4,5 +4,5 @@
 /**
  * 
  */
-module brocode {
+module JavaProgramming {
 }
